@@ -43,7 +43,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link ">Login</a>
+              <RouterLink class="nav-link " to="/login">Login</RouterLink>
             </li>
           </ul>
           <form class="d-flex" role="search">

@@ -9,81 +9,83 @@ const router = createRouter({
       name: "home",
       component: HomeView,
       meta: {
-        title: (route) => "Home",
+        title: (route) => "Főoldal",
+        breadcrumb: "Főoldal"
       },
     },
     {
       path: "/about",
       name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import("@/views/AboutView.vue"),
       meta: {
-        title: (route) => "About",
+        title: (route) => "Rólunk",
+        breadcrumb: "Rólunk"
       },
     },
     {
       path: "/adatok",
       name: "adatok",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import("@/views/EmptyWrapperView.vue"),
-      meta: {},
+      meta: {
+        breadcrumb: "Adatok",
+        disabled: true,
+      },
       children: [
         {
           path: "sport",
           name: "sport",
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("@/views/SportView.vue"),
           meta: {
             title: (route) => "Sport",
+            breadcrumb: "Sport"
           },
         },
         {
           path: "schoolclass",
           name: "schoolclass",
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("@/views/SchoolClasssView.vue"),
           meta: {
             title: (route) => "Osztály",
+            breadcrumb: "Osztály"
           },
         },
         {
           path: "student",
           name: "student",
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("@/views/StudentView.vue"),
           meta: {
             title: (route) => "Tanuló",
+            breadcrumb: "Tanuló"
           },
         },
         {
           path: "plaingsport",
           name: "plaingsport",
-          // route level code-splitting
-          // this generates a separate chunk (About.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
           component: () => import("@/views/PlayngSportView.vue"),
           meta: {
             title: (route) => "Sportolás",
+            breadcrumb: "Sportolás"
           },
         },
       ],
     },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/LoginView.vue"),
+      meta: {
+        title: (route) => "Login",
+        breadcrumb: "Login"
+      },
+    },
+
     {
       path: "/:pathMatch(.*)*",
       name: "NotFound",
       component: () => import("@/views/404.vue"),
       meta: {
         title: (route) => "404",
+        breadcrumb: ""
       },
     },
   ],
