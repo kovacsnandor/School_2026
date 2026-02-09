@@ -144,7 +144,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-"osztalyNev": "8d"
+"osztalyNev": "9"
 }
 
 ### delete class by id 
@@ -154,13 +154,13 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### patch class by id 
-PATCH {{host}}/api/schoolclasses/28 
+PATCH {{host}}/api/schoolclasses/33 
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}
 
 {
-"osztalyNev": "8boss"
+"osztalyNev": "9x"
 }
 
 ### --- sports
