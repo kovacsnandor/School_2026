@@ -120,7 +120,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get schoolclassessortsearch/{column}/{direction}/{search?}
-GET {{host}}/api/schoolclassessortsearch/osztalyNev/asc/8
+GET {{host}}/api/schoolclassessortsearch/osztalyNev/desc/
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}
