@@ -44,39 +44,39 @@ export const useSchoolclassStore = defineStore("schoolclass", {
     },
     //Ha a direction meg van aadva, akkor ez lesz a sorrend
     //Ha nincs megadva, akkor ellentettjére vált
-    // async getAllSortSearch(column = "id", direction = null) {
-    //   //   const toast = useToastStore();
-    //   this.loading = true;
-    //   this.error = null;
-    //   this.sortColumn = column;
-    //   if (!direction) {
-    //     direction =
-    //       this.sortColumn === column && this.sortDirection === "asc"
-    //         ? "desc"
-    //         : "asc";
-    //     this.sortDirection = direction;
-    //   }
-    //   try {
-    //     const response = await service.getAllSortSearch(
-    //       this.sortColumn,
-    //       this.sortDirection,
-    //       this.searchStore.searchWord,
-    //     );
-    //     this.items = response.data;
-    //   } catch (err) {
-    //     this.error = err;
-    //     throw err;
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
+    async getAllSortSearch(column = "id", direction = null) {
+      //   const toast = useToastStore();
+      this.loading = true;
+      this.error = null;
+      this.sortColumn = column;
+      if (!direction) {
+        direction =
+          this.sortColumn === column && this.sortDirection === "asc"
+            ? "desc"
+            : "asc";
+        this.sortDirection = direction;
+      }
+      try {
+        const response = await service.getAllSortSearch(
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
+        this.items = response.data;
+      } catch (err) {
+        this.error = err;
+        throw err;
+      } finally {
+        this.loading = false;
+      }
+    },
     async getAll() {
       //   const toast = useToastStore();
       this.loading = true;
       this.error = null;
       try {
         const response = await service.getAll();
-        this.searchStore.reset();
+        // this.searchStore.reset();
         this.items = response.data;
       } catch (err) {
         this.error = err;
