@@ -53,6 +53,7 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              v-model="searchWordInput"
             />
             
             <label for="search" class="form-label m-0">
@@ -66,7 +67,23 @@
 </template>
 
 <script>
-export default {};
+import { mapActions, mapState } from "pinia";
+import { useSearchStore } from '@/stores/searchStore';
+export default {
+  data(){
+    return {
+      searchWordInput: '',
+    }
+  },
+  watch: {
+    searchWordInput(value){
+      this.setSearchWord(value);
+    }
+  },
+  methods:{
+    ...mapActions(useSearchStore, ['reset', 'setSearchWord'])
+  }
+};
 </script>
 
 <style scoped>

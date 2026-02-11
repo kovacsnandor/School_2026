@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 // import { useToastStore } from "@/stores/toastStore";
-// import { useSearchStore } from "./searchStore";
+import { useSearchStore } from "./searchStore";
 import service from "@/api/schoolclassService";
 
 // const toast = useToastStore();
@@ -21,7 +21,7 @@ export const useSchoolclassStore = defineStore("schoolclass", {
     error: null,
     sortColumn: "id",
     sortDirection: "asc",
-    // searchStore: useSearchStore(),
+    searchStore: useSearchStore(),
   }),
   actions: {
     clearItem() {
