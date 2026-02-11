@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <RouterLink class="nav-link"  to="/">Főoldal</RouterLink>
+              <RouterLink class="nav-link" to="/">Főoldal</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">Rólunk</RouterLink>
@@ -33,17 +33,31 @@
                 Adatok
               </a>
               <ul class="dropdown-menu">
-                <li><RouterLink class="dropdown-item" to="/adatok/sport">Sportok</RouterLink></li>
-                <li><RouterLink class="dropdown-item" to="/adatok/schoolclass">Osztályok</RouterLink></li>
-                <li><RouterLink class="dropdown-item" to="/adatok/student">Tanulók</RouterLink></li>
+                <li>
+                  <RouterLink class="dropdown-item" to="/adatok/sport"
+                    >Sportok</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink class="dropdown-item" to="/adatok/schoolclass"
+                    >Osztályok</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink class="dropdown-item" to="/adatok/student"
+                    >Tanulók</RouterLink
+                  >
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <RouterLink class="dropdown-item" to="/adatok/plaingsport">Sportolás</RouterLink>
+                  <RouterLink class="dropdown-item" to="/adatok/plaingsport"
+                    >Sportolás</RouterLink
+                  >
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link " to="/login">Login</RouterLink>
+              <RouterLink class="nav-link" to="/login">Login</RouterLink>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -55,7 +69,7 @@
               aria-label="Search"
               v-model="searchWordInput"
             />
-            
+
             <label for="search" class="form-label m-0">
               <i class="bi bi-search fs-4 my-pointer"></i>
             </label>
@@ -68,21 +82,34 @@
 
 <script>
 import { mapActions, mapState } from "pinia";
-import { useSearchStore } from '@/stores/searchStore';
+import { useSearchStore } from "@/stores/searchStore";
 export default {
-  data(){
+  data() {
     return {
-      searchWordInput: '',
-    }
+      searchWordInput: "",
+      timeout: null,
+    };
   },
   watch: {
-    searchWordInput(value){
-      this.setSearchWord(value);
-    }
+    //Keresőszó késleltetés
+    searchWordInput(value) {
+      //töröljük az éppen futó setTimeout-ot
+      //hogy újraindíthassuk
+      clearTimeout(this.timeout);
+      //x-re kattintva kiürül az kereső input
+      if (value === "") {
+        this.setSearchWord("");
+        return;
+      }
+      //500ms késleltetés után tárolja
+      this.timeout = setTimeout(() => {
+        this.setSearchWord(value);
+      }, 1000);
+    },
   },
-  methods:{
-    ...mapActions(useSearchStore, ['reset', 'setSearchWord'])
-  }
+  methods: {
+    ...mapActions(useSearchStore, ["reset", "setSearchWord"]),
+  },
 };
 </script>
 
