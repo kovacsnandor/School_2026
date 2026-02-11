@@ -71,7 +71,7 @@
             />
 
             <label for="search" class="form-label m-0">
-              <i class="bi bi-search fs-4 my-pointer"></i>
+              <i @click="onClickSearchButton" class="bi bi-search fs-4 my-pointer"></i>
             </label>
           </form>
         </div>
@@ -92,23 +92,32 @@ export default {
   },
   watch: {
     //Keresőszó késleltetés
-    searchWordInput(value) {
-      //töröljük az éppen futó setTimeout-ot
-      //hogy újraindíthassuk
-      clearTimeout(this.timeout);
-      //x-re kattintva kiürül az kereső input
-      if (value === "") {
-        this.setSearchWord("");
-        return;
+    // searchWordInput(value) {
+    //   //töröljük az éppen futó setTimeout-ot
+    //   //hogy újraindíthassuk
+    //   clearTimeout(this.timeout);
+    //   //x-re kattintva kiürül az kereső input
+    //   if (value === "") {
+    //     this.setSearchWord("");
+    //     return;
+    //   }
+    //   //500ms késleltetés után tárolja
+    //   this.timeout = setTimeout(() => {
+    //     this.setSearchWord(value);
+    //   }, 1000);
+    // },
+
+    searchWordInput(value){
+      if (!value) {
+        this.reset();
       }
-      //500ms késleltetés után tárolja
-      this.timeout = setTimeout(() => {
-        this.setSearchWord(value);
-      }, 1000);
-    },
+    }
   },
   methods: {
     ...mapActions(useSearchStore, ["reset", "setSearchWord"]),
+    onClickSearchButton(){
+      this.setSearchWord(this.searchWordInput);
+    }
   },
 };
 </script>
