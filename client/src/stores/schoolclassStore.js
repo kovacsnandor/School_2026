@@ -54,8 +54,8 @@ export const useSchoolclassStore = defineStore("schoolclass", {
           this.sortColumn === column && this.sortDirection === "asc"
             ? "desc"
             : "asc";
-        this.sortDirection = direction;
       }
+      this.sortDirection = direction;
       try {
         const response = await service.getAllSortSearch(
           this.sortColumn,
