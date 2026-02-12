@@ -33,6 +33,34 @@ class SportController extends Controller
         );
     }
 
+
+    public function indexSortSearch($column, $direction, $search = null)
+    {
+        return $this->apiResponse(
+            function () use ($column, $direction, $search) {
+
+                $query = Sport::query();
+
+                // 2. Szűrés (ha van keresőszó)
+                if (!empty($search) && $search !== 'all') {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('sportNev', 'like', "%{$search}%");
+                        // ->orWhere('description', 'like', "%{$search}%");
+                    });
+                }
+
+                // 3. Sorbarendezés
+                $allowedColumns = ['id', 'sportNev']; // Biztonsági lista
+                $sortColumn = in_array($column, $allowedColumns) ? $column : 'id';
+                $sortDirection = strtolower($direction) === 'desc' ? 'desc' : 'asc';
+                $rows = $query->orderBy($sortColumn, $sortDirection)->get();
+
+                return $rows;
+            }
+        );
+    }
+
+
     public function show(int $id)
     {
         return $this->apiResponse(function () use ($id) {

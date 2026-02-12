@@ -92,6 +92,7 @@ Route::delete('schoolclasses/{id}', [SchoolclassController::class, 'destroy'])
 //region Sport
 Route::get('sports', [SportController::class, 'index']);
 Route::get('sportsabc', [SportController::class, 'indexAbc']);
+Route::get('sportssortsearch/{column}/{direction}/{search?}', [SportController::class, 'indexSortSearch']);
 Route::get('sportspaging/{page}/{per_page}/{column}/{direction}/{search?}', [SportController::class, 'indexPaging']);
 Route::get('sports/{id}', [SportController::class, 'show']);
 Route::post('sports', [SportController::class, 'store'])
