@@ -4,12 +4,16 @@
     <!-- oldal címe -->
     <div class="d-flex align-items-center m-0 mb-2">
       <h1>{{ pageTitle }}</h1>
-      <!-- homokóra -->
-      <i
+      <div class="ms-2">
+
+        <!-- homokóra -->
+        <i
         v-if="loading"
         class="bi bi-hourglass-split fs-3 col-auto p-0 pe-1"
-      ></i>
-      <!-- új rekord ikon -->
+        ></i>
+        <!-- új rekord ikon -->
+        <ButtonsCrudCreate v-if="!loading" @create="createHandler"/>
+      </div>
     </div>
 
     <!-- táblázat -->
@@ -41,12 +45,14 @@ import { useSchoolclassStore } from "@/stores/schoolclassStore";
 import { useSearchStore } from "@/stores/searchStore";
 import GenericTable from "@/components/Table/GenericTable.vue";
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
+import ButtonsCrudCreate from "@/components/Table/ButtonsCrudCreate.vue";
 export default {
   //módosít
   name: "SchooClassView",
   components: {
     GenericTable,
     ConfirmModal,
+    ButtonsCrudCreate,
   },
   watch: {
     searchWord() {
@@ -97,7 +103,7 @@ export default {
       console.log("update:", id);
     },
     createHandler() {
-      console.log("update:");
+      console.log("Create:");
     },
     sortHandler(column) {
       console.log(column);
