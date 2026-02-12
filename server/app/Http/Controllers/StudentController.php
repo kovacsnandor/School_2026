@@ -13,7 +13,7 @@ class StudentController extends Controller
 {
     use AuthorizesRequests;
 
-    public function indexSturdentsBySchoolclassId(
+    public function indexStudentsBySchoolclassId(
         int $schoolclassId,
         string $column,
         string $direction,
@@ -75,7 +75,7 @@ class StudentController extends Controller
         );
     }
 
-    public function indexSturdentsWithSchoolclass(
+    public function indexStudentsWithSchoolclass(
         string $column,
         string $direction,
         ?string $search = null

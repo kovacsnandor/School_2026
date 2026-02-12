@@ -231,14 +231,14 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get sturdentsbyschoolclassid/{schoolclassId}/{column}/{direction}/{search?}
-GET {{host}}/api/sturdentsbyschoolclassid/1/eletkor/asc/
+GET {{host}}/api/studentsbyschoolclassid/2/eletkor/asc/
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}
 
 
 ### get sturdentswithschoolclass/{column}/{direction}/{search?}
-GET {{host}}/api/sturdentswithschoolclass/diakNev/asc/2.9
+GET {{host}}/api/studentswithschoolclass/diakNev/asc/
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}

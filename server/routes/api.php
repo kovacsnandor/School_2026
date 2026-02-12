@@ -55,8 +55,8 @@ Route::delete('users/{id}', [UserController::class, 'destroy'])
 //region Students
 Route::get('students', [StudentController::class, 'index']);
 Route::get('students/{id}', [StudentController::class, 'show']);
-Route::get('sturdentsbyschoolclassid/{schoolclassId}/{column}/{direction}/{search?}', [StudentController::class, 'indexSturdentsBySchoolclassId']);
-Route::get('sturdentswithschoolclass/{column}/{direction}/{search?}', [StudentController::class, 'indexSturdentsWithSchoolclass']);
+Route::get('studentsbyschoolclassid/{schoolclassId}/{column}/{direction}/{search?}', [StudentController::class, 'indexStudentsBySchoolclassId']);
+Route::get('studentswithschoolclass/{column}/{direction}/{search?}', [StudentController::class, 'indexStudentsWithSchoolclass']);
 Route::post('students', [StudentController::class, 'store'])
     ->middleware(['auth:sanctum', 'ability:students:post']);
 Route::patch('students/{id}', [StudentController::class, 'update'])
