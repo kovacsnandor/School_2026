@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
 // import { useToastStore } from "@/stores/toastStore";
 import { useSearchStore } from "./searchStore";
-import service from "@/api/schoolclassService";
+import service from "@/api/sportService";
 
 // const toast = useToastStore();
 
 //változtatás
 class Item {
-  constructor(id = 0, osztalyNev = "") {
+  constructor(id = 0, sportNev = "") {
     this.id = id;
-    this.osztalyNev = osztalyNev;
+    this.sportNev = sportNev;
   }
 }
 
-export const useSchoolclassStore = defineStore("schoolclass", {
+export const useSportStore = defineStore("sports", {
   state: () => ({
     item: new Item(),
     items: [new Item()],
@@ -23,7 +23,7 @@ export const useSchoolclassStore = defineStore("schoolclass", {
     sortDirection: "asc",
     searchStore: useSearchStore(),
   }),
-   getters:{
+  getters:{
     getItemsLength(){
       return this.items.length;
     }

@@ -177,7 +177,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### get schoolclassessortsearch/{column}/{direction}/{search?}
-GET {{host}}/api/sportssortsearch/sportNev/asc/
+GET {{host}}/api/sportssortsearch/sportNev/asc/labda
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}

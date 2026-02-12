@@ -4,15 +4,15 @@
     <!-- oldal címe -->
     <div class="d-flex align-items-center m-0 mb-2">
       <h1>{{ pageTitle }}</h1>
-      <div class="ms-2">
-
+      <div class="d-flex align-items-center m-0 ms-2">
         <!-- homokóra -->
         <i
-        v-if="loading"
-        class="bi bi-hourglass-split fs-3 col-auto p-0 pe-1"
+          v-if="loading"
+          class="bi bi-hourglass-split fs-3 col-auto p-0 pe-1"
         ></i>
         <!-- új rekord ikon -->
-        <ButtonsCrudCreate v-if="!loading" @create="createHandler"/>
+        <ButtonsCrudCreate v-if="!loading" @create="createHandler" />
+        <p class="m-0 ms-2">({{ getItemsLength }})</p>
       </div>
     </div>
 
@@ -82,6 +82,7 @@ export default {
       "loading",
       "sortColumn",
       "sortDirection",
+      "getItemsLength",
     ]),
     ...mapState(useSearchStore, ["searchWord"]),
   },
@@ -95,6 +96,7 @@ export default {
       "update",
       "delete",
     ]),
+    ...mapActions(useSearchStore,['resetSearchWord']),
     deleteHandler(id) {
       this.isOpenConfirmModal = true;
       this.toDeleteId = id;
@@ -119,6 +121,7 @@ export default {
     },
   },
   async mounted() {
+    this.resetSearchWord();
     await this.getAll();
   },
 };

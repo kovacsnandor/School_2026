@@ -109,12 +109,18 @@ export default {
 
     searchWordInput(value){
       if (!value) {
-        this.reset();
+        this.resetSearchWord();
       }
+    },
+    searchWord(value){
+      this.searchWordInput = value;
     }
   },
+  computed: {
+    ...mapState(useSearchStore, ['searchWord']),
+  },
   methods: {
-    ...mapActions(useSearchStore, ["reset", "setSearchWord"]),
+    ...mapActions(useSearchStore, ["resetSearchWord", "setSearchWord"]),
     onClickSearchButton(){
       this.setSearchWord(this.searchWordInput);
     }

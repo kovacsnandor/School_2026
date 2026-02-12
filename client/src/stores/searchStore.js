@@ -13,7 +13,7 @@ export const useSearchStore = defineStore("search", {
   },
   //csinál vele valamit
   actions: {
-    reset(){
+    resetSearchWord(){
         this.searchWord = '';
     },
     setSearchWord(value){
