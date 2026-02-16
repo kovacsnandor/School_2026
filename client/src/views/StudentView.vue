@@ -14,8 +14,16 @@
         <ButtonsCrudCreate v-if="!loading" @create="createHandler" />
         <p class="m-0 ms-2">({{ getItemsLength }})</p>
 
-        <select class="form-select ms-2" aria-label="Default select example">
-          <option v-for="sItem in schoolClassItems" :key="sItem.id" :value="sItem.Id">
+        <select
+          class="form-select ms-2"
+          aria-label="Default select example"
+          v-model="selectedSchoolclassId"
+        >
+          <option
+            v-for="sItem in schoolClassItems"
+            :key="sItem.id"
+            :value="sItem.id"
+          >
             {{ sItem.osztalyNev }}
           </option>
         </select>
@@ -23,7 +31,7 @@
     </div>
 
     <!-- táblázat -->
-    <!-- <GenericTable
+    <GenericTable
       :items="items"
       :columns="tableColumns"
       :useCollectionStore="useCollectionStore"
@@ -34,7 +42,7 @@
       v-if="items.length > 0"
     />
     <div v-else style="width: 100px" class="m-auto">Nincs találat</div>
- -->
+
     <!-- Confirm modal -->
     <ConfirmModal
       :isOpenConfirmModal="isOpenConfirmModal"
@@ -62,21 +70,36 @@ export default {
     ButtonsCrudCreate,
   },
   watch: {
-    // searchWord() {
-    //   this.getAllSortSearch(this.sortColumn, this.sortDirection);
-    // },
+    searchWord() {
+      this.getStudentsBySchoolclassId(this.selectedSchoolclassId,this.sortColumn, this.sortDirection);
+    },
+    selectedSchoolclassId(value){
+      this.getStudentsBySchoolclassId(value,this.sortColumn, this.sortDirection);
+    }
   },
   data() {
     return {
       //módosít
       pageTitle: "Diákok",
+      selectedSchoolclassId: null,
       //módosít
-      // tableColumns: [
-      //   { key: "id", label: "ID", debug: import.meta.env.VITE_DEBUG_MODE },
-      //   { key: "osztalyNev", label: "Osztálynév", debug: 2 },
-      // ],
+      tableColumns: [
+        { key: "id", label: "ID", debug: import.meta.env.VITE_DEBUG_MODE },
+        { key: "diakNev", label: "---Diáknév---", debug: 2 },
+        { key: "schoolclassId", label: "Osztály ID", debug: import.meta.env.VITE_DEBUG_MODE },
+        { key: "nemeString", label: "Neme", debug: 2 },
+        { key: "iranyitoszam", label: "Irsz.", debug: 2 },
+        { key: "lakHelyseg", label: "Település", debug: 2 },
+        { key: "lakCim", label: "------Cím------", debug: 2 },
+        { key: "szulHelyseg", label: "Szül. hely", debug: 2 },
+        { key: "szulDatum", label: "Szül. dátum", debug: 2 },
+        { key: "igazolvanyszam", label: "Igazolványszám", debug: 2 },
+        { key: "atlag", label: "Átlag", debug: 2 },
+        { key: "osztondij", label: "Ösztöndíj", debug: 2 },
+        { key: "eletkor", label: "Életkor", debug: 2 },
+      ],
       //módosít
-      useCollectionStore: useSchoolclassStore,
+      useCollectionStore: useStudentStore,
       isOpenConfirmModal: false,
       toDeleteId: null,
     };
@@ -86,13 +109,14 @@ export default {
     ...mapState(useSchoolclassStore, {
       schoolClassItems: "items",
     }),
-    ...mapState(useStudentStore, ["items"]),
+    ...mapState(useStudentStore, ["items", "loading", "getItemsLength","sortColumn","sortDirection"]),
     ...mapState(useSearchStore, ["searchWord"]),
   },
   methods: {
     //módosít
     ...mapActions(useSchoolclassStore, ["getAllAbc"]),
     ...mapActions(useSearchStore, ["resetSearchWord"]),
+    ...mapActions(useStudentStore,["getStudentsBySchoolclassId"]),
     deleteHandler(id) {
       this.isOpenConfirmModal = true;
       this.toDeleteId = id;
@@ -105,7 +129,7 @@ export default {
     },
     sortHandler(column) {
       console.log(column);
-      this.getAllSortSearch(column);
+      this.getStudentsBySchoolclassId(this.selectedSchoolclassId, column);
     },
     cancelHandler() {
       console.log("mégsem törlök");
@@ -118,8 +142,13 @@ export default {
   },
   async mounted() {
     this.resetSearchWord();
-    // await this.getAll();
+    //Osztályok betöltése
     await this.getAllAbc();
+    //az első osztály jelenjen meg
+    this.selectedSchoolclassId = this.schoolClassItems[0].id;
+    //tanulók betöltése
+    await this.getStudentsBySchoolclassId(this.selectedSchoolclassId);
+
   },
 };
 </script>
