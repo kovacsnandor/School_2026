@@ -63,6 +63,9 @@ class UserController extends Controller
             case 2:
                 //tanar
                 $abilities = [
+                    'playingsports:post',
+                    'playingsports:patch',
+                    'playingsports:delete',
                     'students:post',
                     'students:patch',
                     'students:delete',

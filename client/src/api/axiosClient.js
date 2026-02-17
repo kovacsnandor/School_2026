@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { useUserLoginLogoutStore } from "@/stores/userLoginLogoutStore";
+import { useUserLoginLogoutStore } from "@/stores/userLoginLogoutStore";
 // import { useToastStore } from "@/stores/toastStore";
 
 // apiClient objektum:
@@ -17,8 +17,8 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     
-    // const token = useUserLoginLogoutStore().token; // Vagy a Pinia store-ból
-    const token = "";
+    const token = useUserLoginLogoutStore().token; // Vagy a Pinia store-ból
+    // const token = "";
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
