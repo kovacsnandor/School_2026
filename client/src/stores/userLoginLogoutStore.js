@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 // import { useToastStore } from "@/stores/toastStore";
 import service from "@/api/userLoginLogoutService";
-
-// const toast = useToastStore();
+import { useToastStore } from "./toastStore";
 
 export const useUserLoginLogoutStore = defineStore("userLoginLogout", {
   //Ezek a változók
@@ -58,6 +57,9 @@ export const useUserLoginLogoutStore = defineStore("userLoginLogout", {
         const response = await service.login(data);
         this.item = response.data;
         localStorage.setItem("user_data", JSON.stringify(response.data));
+        const toastStore = useToastStore();
+        toastStore.messages.push("Sikeres bejelentkezés");
+        toastStore.show("Success");
         return true;
       } catch (err) {
         this.error = err;
@@ -75,12 +77,14 @@ export const useUserLoginLogoutStore = defineStore("userLoginLogout", {
         this.item = null;
         // Törlés localStorage-ból
         localStorage.removeItem("user_data");
+        const toastStore = useToastStore();
+        toastStore.messages.push("Sikeres kijelenkezés");
+        toastStore.show("Success");
+
         return true;
       } catch (err) {
         this.error = err;
         this.item = null;
-        // toast.messages.push(`Logout sikertelen`);
-        // toast.show("Error");
         throw err;
         return false;
       } finally {
@@ -97,8 +101,6 @@ export const useUserLoginLogoutStore = defineStore("userLoginLogout", {
         return true;
       } catch (err) {
         this.error = err;
-        // toast.messages.push(`Az adat nem található`);
-        // toast.show("Error");
         throw err;
         return false;
       } finally {

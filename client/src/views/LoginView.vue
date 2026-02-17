@@ -31,7 +31,7 @@ export default {
     ...mapActions(useUserLoginLogoutStore,['login','logout']),
     onClickButtonAdmin() {
       const data = {
-        email: "admin@example.com",
+        email: "adminx@example.com",
         password: "123",
       };
       this.login(data);

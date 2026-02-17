@@ -32,7 +32,7 @@ class UserController extends Controller
         //Stimmel-e az email és a jelszó?
         if (!$user || !Hash::check($password, $password ? $user->password : '')) {
             return response()->json([
-                'message' => 'invalid email or password'
+                'message' => 'Invalid email or password'
             ], 401);
         }
 

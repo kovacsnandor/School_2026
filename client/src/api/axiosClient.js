@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useUserLoginLogoutStore } from "@/stores/userLoginLogoutStore";
-// import { useToastStore } from "@/stores/toastStore";
+import { useToastStore } from "@/stores/toastStore";
 
 // apiClient objektum:
 // tartalmazza az összes crud függvényt
@@ -37,11 +37,12 @@ apiClient.interceptors.response.use(
   //Ha hiba: akkor kezeli a hibát és visszaküld egy Promies.reject(error)-t
   (error) => {
     
-    // const toastStore = useToastStore();
+    const toastStore = useToastStore();
     // Ha a szerver válaszolt
     if (error.response) {
       const status = error.response.status;
       const message = error.response.data.message || "Hiba történt";
+      
 
       // 1. Speciális eset: 422 Unprocessable Entity (Validációs hiba)
       if (status === 422) {
@@ -53,19 +54,19 @@ apiClient.interceptors.response.use(
       // 2. Speciális eset: 401 Unauthorized
       if (status === 401) {
         // Ha login-nál kapunk 401-et, azt kiírhatjuk toast-ban (pl. Rossz jelszó)
-        // toastStore.messages.push(message);
-        // toastStore.show("Error");
+        toastStore.messages.push(message);
+        toastStore.show("Error");
         return Promise.reject(error);
       }
 
       // 3. Minden egyéb hiba (500, 404, 403, stb.)
-    //   toastStore.messages.push(message);
-    //   toastStore.show("Error");
+      toastStore.messages.push(message);
+      toastStore.show("Error");
 
     } else {
       // Hálózati hiba (nincs válasz)
-    //   toastStore.messages.push("A szerver nem elérhető.");
-    //   toastStore.show("Error");
+      toastStore.messages.push("A szerver nem elérhető.");
+      toastStore.show("Error");
     }
 
     return Promise.reject(error);
