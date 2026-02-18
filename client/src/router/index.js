@@ -118,7 +118,6 @@ router.beforeEach((to, from, next) => {
   // Megkeressük az összes meta.roles beállítást az útvonal láncban
   // (A to.matched azért jó, mert ha a szülő védett, az egész ág védett lesz)
   const requiredRoles = to.meta.roles;
-  console.log(requiredRoles);
   
   const userStore = useUserLoginLogoutStore();
   // Használjuk a már megismert logikát

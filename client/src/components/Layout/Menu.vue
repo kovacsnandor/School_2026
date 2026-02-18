@@ -22,7 +22,7 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">Rólunk</RouterLink>
             </li>
-            <li class="nav-item dropdown"  v-if="hasMenuAccess('/adatok')">
+            <li class="nav-item dropdown" v-if="hasMenuAccess('/adatok')">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -43,13 +43,13 @@
                     >Osztályok</RouterLink
                   >
                 </li>
-                <li  v-if="hasMenuAccess('/adatok/student')">
+                <li v-if="hasMenuAccess('/adatok/student')">
                   <RouterLink class="dropdown-item" to="/adatok/student"
                     >Tanulók</RouterLink
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li  v-if="hasMenuAccess('/adatok/plaingsport')">
+                <li v-if="hasMenuAccess('/adatok/plaingsport')">
                   <RouterLink class="dropdown-item" to="/adatok/plaingsport"
                     >Sportolás</RouterLink
                   >
@@ -57,7 +57,22 @@
               </ul>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/login">Login</RouterLink>
+              <RouterLink class="nav-link" to="/login" v-if="!isLoggedIn">
+                Login
+              </RouterLink>
+              <div v-if="isLoggedIn" class="d-flex align-items-center">
+                <RouterLink class="nav-link" to="/userprofil">
+                  <i class="bi bi-person"></i>
+                  {{ userNameWithRole }}
+                </RouterLink>
+
+                <!-- logout -->
+                <i
+                  class="bi bi-box-arrow-right ms-2 my-pointer tight-icon"
+                  style="font-size: 2rem"
+                  @click="onClickLogut()"
+                ></i>
+              </div>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -71,7 +86,10 @@
             />
 
             <label for="search" class="form-label m-0">
-              <i @click="onClickSearchButton" class="bi bi-search fs-4 my-pointer"></i>
+              <i
+                @click="onClickSearchButton"
+                class="bi bi-search fs-4 my-pointer"
+              ></i>
             </label>
           </form>
         </div>
@@ -84,6 +102,7 @@
 import { mapActions, mapState } from "pinia";
 import { useSearchStore } from "@/stores/searchStore";
 import { useUserLoginLogoutStore } from "@/stores/userLoginLogoutStore";
+import userLoginLogoutService from "@/api/userLoginLogoutService";
 export default {
   data() {
     return {
@@ -108,23 +127,25 @@ export default {
     //   }, 1000);
     // },
 
-    searchWordInput(value){
+    searchWordInput(value) {
       if (!value) {
         this.resetSearchWord();
       }
     },
-    searchWord(value){
+    searchWord(value) {
       this.searchWordInput = value;
-    }
+    },
   },
   computed: {
-    ...mapState(useSearchStore, ['searchWord']),
+    ...mapState(useSearchStore, ["searchWord"]),
+    ...mapState(useUserLoginLogoutStore, ['isLoggedIn','userNameWithRole'])
   },
   methods: {
     ...mapActions(useSearchStore, ["resetSearchWord", "setSearchWord"]),
-    onClickSearchButton(){
+    onClickSearchButton() {
       this.setSearchWord(this.searchWordInput);
     },
+    ...mapActions(useUserLoginLogoutStore, ['logout']),
     hasMenuAccess(targetPath) {
       //A jogosultsági szintnek megfelelően engedélyezi, vagy tiltja a menüt
       const userStore = useUserLoginLogoutStore();
@@ -140,6 +161,9 @@ export default {
         // A már meglévő Pinia getterünket hívjuk meg minden szinten
         return userStore.canAccess(requiredRoles);
       });
+    },
+    onClickLogut(){
+      this.logout();
     },
   },
 };
