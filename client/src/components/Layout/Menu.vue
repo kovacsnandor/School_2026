@@ -22,7 +22,7 @@
             <li class="nav-item">
               <RouterLink class="nav-link" to="/about">Rólunk</RouterLink>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown"  v-if="hasMenuAccess('/adatok')">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -33,23 +33,23 @@
                 Adatok
               </a>
               <ul class="dropdown-menu">
-                <li>
+                <li v-if="hasMenuAccess('/adatok/sport')">
                   <RouterLink class="dropdown-item" to="/adatok/sport"
                     >Sportok</RouterLink
                   >
                 </li>
-                <li>
+                <li v-if="hasMenuAccess('/adatok/schoolclass')">
                   <RouterLink class="dropdown-item" to="/adatok/schoolclass"
                     >Osztályok</RouterLink
                   >
                 </li>
-                <li>
+                <li  v-if="hasMenuAccess('/adatok/student')">
                   <RouterLink class="dropdown-item" to="/adatok/student"
                     >Tanulók</RouterLink
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
-                <li>
+                <li  v-if="hasMenuAccess('/adatok/plaingsport')">
                   <RouterLink class="dropdown-item" to="/adatok/plaingsport"
                     >Sportolás</RouterLink
                   >
@@ -83,6 +83,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useSearchStore } from "@/stores/searchStore";
+import { useUserLoginLogoutStore } from "@/stores/userLoginLogoutStore";
 export default {
   data() {
     return {
@@ -123,7 +124,23 @@ export default {
     ...mapActions(useSearchStore, ["resetSearchWord", "setSearchWord"]),
     onClickSearchButton(){
       this.setSearchWord(this.searchWordInput);
-    }
+    },
+    hasMenuAccess(targetPath) {
+      //A jogosultsági szintnek megfelelően engedélyezi, vagy tiltja a menüt
+      const userStore = useUserLoginLogoutStore();
+      const resolved = this.$router.resolve(targetPath);
+
+      if (!resolved || !resolved.matched.length) return false;
+
+      // Végigmeneteltetjük a szabályt az összes szülőn keresztül (adatok -> sports)
+      // Az 'every' akkor igaz, ha minden egyes elemre igaz a feltétel
+      return resolved.matched.every((route) => {
+        const requiredRoles = route.meta?.roles;
+
+        // A már meglévő Pinia getterünket hívjuk meg minden szinten
+        return userStore.canAccess(requiredRoles);
+      });
+    },
   },
 };
 </script>
