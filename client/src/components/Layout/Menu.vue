@@ -162,8 +162,14 @@ export default {
         return userStore.canAccess(requiredRoles);
       });
     },
-    onClickLogut(){
-      this.logout();
+    async onClickLogut(){
+      try {
+        await this.logout();
+        this.$router.push('/');
+      } catch (error) {
+        console.log('Kijelentkezési hiba!');
+      }
+
     },
   },
 };

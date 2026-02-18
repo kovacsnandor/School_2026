@@ -57,9 +57,9 @@ export const useUserLoginLogoutStore = defineStore("userLoginLogout", {
         const response = await service.login(data);
         this.item = response.data;
         localStorage.setItem("user_data", JSON.stringify(response.data));
-        const toastStore = useToastStore();
-        toastStore.messages.push("Sikeres bejelentkezés");
-        toastStore.show("Success");
+        // const toastStore = useToastStore();
+        // toastStore.messages.push("Sikeres bejelentkezés");
+        // toastStore.show("Success");
         return true;
       } catch (err) {
         this.error = err;

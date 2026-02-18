@@ -8,31 +8,35 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class DatabaseTest extends TestCase
 {
 
     use DatabaseTransactions;
 
-    public function test_database_creation_end_tables_exists()
+
+    public static function tablesNameProvider(){
+        return [
+            'Table: students' => ['students'],
+            'Table: schoolclasses' => ['schoolclasses'],
+            'Table: playingsports' => ['playingsports'],
+            'Table: sports' => ['sports'],
+            'Table: users' => ['users'],
+        ];
+    }
+
+    public function test_do_database_exists()
     {
         $databaseNameConn = DB::connection()->getDatabaseName();
         $databaseNameEnv = env('DB_DATABASE');
         $this->assertEquals($databaseNameConn, $databaseNameEnv, "Az adatbázisunk nem az, amivel dolgozni akarunk");
-
-        //Megvannak-e a tábláink
-        // $this->assertDatabaseHas('students');
-        // $this->assertDatabaseHas('schoolclasses');
-        // $this->assertDatabaseHas('playingsports');
-        // $this->assertDatabaseHas('sports');
-        // $this->assertDatabaseHas('users');
-
-        $this->assertTrue(Schema::hasTable('students'), 'students tábla nem létezik');
-        $this->assertTrue(Schema::hasTable('schoolclasses'), 'schoolclasses tábla nem létezik');
-        $this->assertTrue(Schema::hasTable('playingsports'), 'playingsports tábla nem létezik');
-        $this->assertTrue(Schema::hasTable('sports'), 'sports tábla nem létezik');
-        $this->assertTrue(Schema::hasTable('users'), 'users tábla nem létezik');
         echo PHP_EOL . "Adatbázis -> DB_DATABASE={$databaseNameEnv} | adatbázis: {$databaseNameConn}";
+    }
+
+      #[DataProvider('tablesNameProvider')]
+    public function test_do_tables_exists($tableName){
+        $this->assertTrue(Schema::hasTable($tableName), "$tableName tábla nem létezik");
     }
 
     public function test_sports_table_structure()
