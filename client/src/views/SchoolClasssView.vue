@@ -30,6 +30,12 @@
     <div v-else style="width: 100px" class="m-auto">Nincs találat</div>
 
     <!-- Form -->
+     <FormSchoolClass
+      ref="form"
+      :title="title"
+      :item="item"
+      @yesEventForm="yesEventFormHandler"
+     />
 
     <!-- Confirm modal -->
     <ConfirmModal
@@ -48,6 +54,7 @@ import { useSearchStore } from "@/stores/searchStore";
 import GenericTable from "@/components/Table/GenericTable.vue";
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import ButtonsCrudCreate from "@/components/Table/ButtonsCrudCreate.vue";
+import FormSchoolClass from "@/components/Forms/FormSchoolClass.vue";
 export default {
   //módosít
   name: "SchooClassView",
@@ -55,6 +62,7 @@ export default {
     GenericTable,
     ConfirmModal,
     ButtonsCrudCreate,
+    FormSchoolClass,
   },
   watch: {
     searchWord() {
@@ -74,6 +82,7 @@ export default {
       useCollectionStore: useSchoolclassStore,
       isOpenConfirmModal: false,
       toDeleteId: null,
+      state: 'r', //crud
     };
   },
   computed: {
@@ -97,29 +106,43 @@ export default {
       "create",
       "update",
       "delete",
+      "clearItem",
     ]),
     ...mapActions(useSearchStore,['resetSearchWord']),
     deleteHandler(id) {
+      this.state="d";
       this.isOpenConfirmModal = true;
       this.toDeleteId = id;
     },
+    //módosítani akarok
     updateHandler(id) {
+      this.state="u";
       console.log("update:", id);
     },
     createHandler() {
+      this.state= "c";
       console.log("Create:");
     },
     sortHandler(column) {
       console.log(column);
       this.getAllSortSearch(column);
     },
+    //nem akarok törölni
     cancelHandler() {
       console.log("mégsem törlök");
       this.isOpenConfirmModal = false;
+      this.state = 'r'
     },
+    //mehet a torlés
     confirmHandler() {
       console.log("delete:", this.toDeleteId);
       this.isOpenConfirmModal = false;
+      //törlés
+      this.state = 'r'
+    },
+
+    yesEventFormHandler({item, done}){
+
     },
   },
   async mounted() {
