@@ -108,6 +108,15 @@ const router = createRouter({
         breadcrumb: "Login",
       },
     },
+    {
+      path: "/registration",
+      name: "registration",
+      component: () => import("@/views/RegistrationView.vue"),
+      meta: {
+        title: (route) => "Regisztráció",
+        breadcrumb: "Regisztráció",
+      },
+    },
 
     {
       path: "/:pathMatch(.*)*",

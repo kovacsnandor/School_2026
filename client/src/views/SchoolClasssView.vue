@@ -29,6 +29,8 @@
     />
     <div v-else style="width: 100px" class="m-auto">Nincs találat</div>
 
+    <!-- Form -->
+
     <!-- Confirm modal -->
     <ConfirmModal
       :isOpenConfirmModal="isOpenConfirmModal"

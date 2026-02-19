@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 // import { useToastStore } from "@/stores/toastStore";
 import { useSearchStore } from "./searchStore";
+import { useToastStore } from "./toastStore";
 import service from "@/api/userService";
-
-// const toast = useToastStore();
 
 //változtatás
 class Item {
@@ -37,8 +36,8 @@ export const useUserStore = defineStore("user", {
     // READ - Összes adat lekérése
 
     async getAllSortSearch(column = "id", direction = null) {
-        console.log("sort user");
-        
+      console.log("sort user");
+
       //   const toast = useToastStore();
       this.loading = true;
       this.error = null;
@@ -111,6 +110,25 @@ export const useUserStore = defineStore("user", {
         this.items = response.data;
         // toast.messages.push("Sikeresen létrehozva!");
         // toast.show("Success");
+        return true;
+      } catch (err) {
+        this.error = err;
+        throw err;
+        return false;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    // CREATE - Új elem hozzáadása
+    async createUser(data) {
+      this.loading = true;
+      this.error = null;
+      try {
+        const newItem = await service.create(data);
+        const toast = useToastStore();
+        toast.messages.push("User sikeresen létrehozva!");
+        toast.show("Success");
         return true;
       } catch (err) {
         this.error = err;
