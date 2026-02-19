@@ -32,6 +32,11 @@ GET  {{host}}/api/users
 Accept: application/json
 Authorization: Bearer {{token}}
 
+### get usersortsearch/{column}/{direction}/{search?}
+GET {{host}}/api/userssortsearch/name/desc/admin
+Accept: application/json
+Authorization: Bearer {{token}}
+
 ### get user by id
 GET  {{host}}/api/users/1
 Accept: application/json

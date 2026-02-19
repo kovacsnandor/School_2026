@@ -23,7 +23,6 @@ Route::post('users/login', [UserController::class, 'login']);
 Route::post('users/logout', [UserController::class, 'logout']);
 Route::post('users', [UserController::class, 'store']);
 
-
 //region usersme
 Route::get('usersme', [UserController::class, 'indexSelf'])
     ->middleware(['auth:sanctum', 'ability:usersme:get']);
@@ -32,7 +31,7 @@ Route::patch('usersme', [UserController::class, 'updateSelf'])
     ->middleware(['auth:sanctum', 'ability:usersme:patch']);
 
 Route::patch('usersmeupdatepassword', [UserController::class, 'updatePassword'])
-->middleware('auth:sanctum', 'ability:usersme:updatePassword');    
+    ->middleware('auth:sanctum', 'ability:usersme:updatePassword');
 
 Route::delete('usersme', [UserController::class, 'destroySelf'])
     ->middleware(['auth:sanctum', 'ability:usersme:delete']);
@@ -40,6 +39,9 @@ Route::delete('usersme', [UserController::class, 'destroySelf'])
 
 //region admin endpoint
 Route::get('users', [UserController::class, 'index'])
+    ->middleware(['auth:sanctum', 'ability:admin']);
+
+Route::get('userssortsearch/{column}/{direction}/{search?}', [UserController::class, 'indexUsersSortSearch'])
     ->middleware(['auth:sanctum', 'ability:admin']);
 
 Route::get('users/{id}', [UserController::class, 'show'])
@@ -60,7 +62,7 @@ Route::get('studentswithschoolclass/{column}/{direction}/{search?}', [StudentCon
 Route::post('students', [StudentController::class, 'store'])
     ->middleware(['auth:sanctum', 'ability:students:post']);
 Route::patch('students/{id}', [StudentController::class, 'update'])
-    ->middleware(['auth:sanctum','ability:students:patch']);
+    ->middleware(['auth:sanctum', 'ability:students:patch']);
 Route::delete('students/{id}', [StudentController::class, 'destroy'])
     ->middleware(['auth:sanctum', 'ability:students:delete']);
 //endregion

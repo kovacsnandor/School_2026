@@ -141,10 +141,48 @@ class UserController extends Controller
         return response()->json($data, options: JSON_UNESCAPED_UNICODE);
     }
 
+    public function indexUsersSortSearch(
+        string $column,
+        string $direction,
+        ?string $search = null
+    ) {
+        return $this->apiResponse(
+            function () use ($column, $direction, $search) {
 
-    /**
-     * Display a listing of the resource.
-     */
+                // 1. Alap query: az adott osztály diákjai a kapcsolódó adatokkal
+                $query = User::query();
+
+                // 2. Keresés (LIKE), ha érkezett keresőszó
+                if ($search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%")
+                            ->orWhere('email', 'like', "%{$search}%")
+                            ->orWhere('role', 'like', "%{$search}%");
+                    });
+                }
+
+                // 3. Biztonságos rendezés (Whitelisting)
+                // Megadjuk, mely oszlopok szerint engedünk rendezni
+                $validColumns = [
+                    'id',
+                    'name',
+                    'email',
+                    'role',
+                ];
+
+                // Ha az URL-ben kapott oszlopnév nincs a listában, válasszuk a diák nevét alapértelmezettnek
+                $sortColumn = in_array($column, $validColumns) ? $column : 'id';
+                // Az irány is legyen biztonságos (csak asc vagy desc)
+                $sortDirection = strtolower($direction) === 'desc' ? 'desc' : 'asc';
+
+                return $query->orderBy($sortColumn, $sortDirection)->get();
+            }
+        );
+    }
+
+    
+
+
     public function index()
     {
         try {

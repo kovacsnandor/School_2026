@@ -86,6 +86,17 @@ const router = createRouter({
             roles: [1, 2],
           },
         },
+        {
+          path: "users",
+          name: "users",
+          component: () => import("@/views/UsersView.vue"),
+          beforeEnter: [checkIfNotLogged],
+          meta: {
+            title: (route) => "Users",
+            breadcrumb: "Users",
+            roles: [1],
+          },
+        },
       ],
     },
     {
