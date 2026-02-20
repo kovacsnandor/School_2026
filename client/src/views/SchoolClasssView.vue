@@ -83,6 +83,7 @@ export default {
       isOpenConfirmModal: false,
       toDeleteId: null,
       state: 'r', //crud
+      title: '',
     };
   },
   computed: {
@@ -117,10 +118,17 @@ export default {
     //módosítani akarok
     updateHandler(id) {
       this.state="u";
+      this.title="Adatmódosítás"
+      this.getById(id);
+      this.$refs.form.show();
       console.log("update:", id);
     },
+    //újat akarok
     createHandler() {
       this.state= "c";
+      this.title="Új adatbevitel"
+      this.clearItem()
+      this.$refs.form.show();
       console.log("Create:");
     },
     sortHandler(column) {
@@ -142,7 +150,17 @@ export default {
     },
 
     yesEventFormHandler({item, done}){
-
+      //vagy create, vagy update
+      if (this.state == "c") {
+        //create
+        console.log("create", item);
+        
+      } else {
+        //update
+        console.log("update", item);
+        
+      }
+      this.$refs.form.hide();
     },
   },
   async mounted() {
