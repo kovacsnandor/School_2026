@@ -60,7 +60,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name": "No Boss"
+    "role": 3
 }
 
 ### delete user
