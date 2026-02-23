@@ -30,12 +30,12 @@
     <div v-else style="width: 100px" class="m-auto">Nincs találat</div>
 
     <!-- Form -->
-     <FormSchoolClass
+    <FormSchoolClass
       ref="form"
       :title="title"
       :item="item"
       @yesEventForm="yesEventFormHandler"
-     />
+    />
 
     <!-- Confirm modal -->
     <ConfirmModal
@@ -82,8 +82,8 @@ export default {
       useCollectionStore: useSchoolclassStore,
       isOpenConfirmModal: false,
       toDeleteId: null,
-      state: 'r', //crud
-      title: '',
+      state: "r", //crud
+      title: "",
     };
   },
   computed: {
@@ -109,25 +109,25 @@ export default {
       "delete",
       "clearItem",
     ]),
-    ...mapActions(useSearchStore,['resetSearchWord']),
+    ...mapActions(useSearchStore, ["resetSearchWord"]),
     deleteHandler(id) {
-      this.state="d";
+      this.state = "d";
       this.isOpenConfirmModal = true;
       this.toDeleteId = id;
     },
     //módosítani akarok
     updateHandler(id) {
-      this.state="u";
-      this.title="Adatmódosítás"
+      this.state = "u";
+      this.title = "Adatmódosítás";
       this.getById(id);
       this.$refs.form.show();
       console.log("update:", id);
     },
     //újat akarok
     createHandler() {
-      this.state= "c";
-      this.title="Új adatbevitel"
-      this.clearItem()
+      this.state = "c";
+      this.title = "Új adatbevitel";
+      this.clearItem();
       this.$refs.form.show();
       console.log("Create:");
     },
@@ -139,28 +139,42 @@ export default {
     cancelHandler() {
       console.log("mégsem törlök");
       this.isOpenConfirmModal = false;
-      this.state = 'r'
+      this.state = "r";
     },
     //mehet a torlés
-    confirmHandler() {
-      console.log("delete:", this.toDeleteId);
+    async confirmHandler() {
+      await this.delete(this.toDeleteId)
       this.isOpenConfirmModal = false;
-      //törlés
-      this.state = 'r'
+      this.state = "r";
     },
 
-    yesEventFormHandler({item, done}){
+    async yesEventFormHandler({ item, done }) {
       //vagy create, vagy update
-      if (this.state == "c") {
-        //create
-        console.log("create", item);
-        
-      } else {
-        //update
-        console.log("update", item);
-        
+      try {
+        if (this.state == "c") {
+          //create
+          await this.create(item);
+        } else {
+          //update
+          await this.update(item.id, item);
+        }
+        //nem volt hiba
+        this.state="r";
+        done(true);
+      } catch (err) {
+        //hiba volt
+        //nem csukódik le az ablak
+        if (err.response && err.response.status === 422) {
+          // Átadjuk a formnak a konkrét hibaüzeneteket (pl. "min 2 karakter")
+          this.$refs.form.setServerErrors(err.response.data.errors);
+          done(false); // Nyitva tartja a modalt
+        } else {
+          // Minden más hiba (500, 401) esetén is értesítjük a modalt, hogy ne záródjon be
+          done(false);
+        }
+        //átadom a hibát
+
       }
-      this.$refs.form.hide();
     },
   },
   async mounted() {

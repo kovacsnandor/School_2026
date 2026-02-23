@@ -123,7 +123,7 @@ export const useSchoolclassStore = defineStore("schoolclass", {
         // toast.show("Success");
         return true;
       } catch (err) {
-        this.error = err;
+        this.error = err.response.data.errors.osztalyNev[0];
         throw err;
         return false;
       } finally {
@@ -137,12 +137,12 @@ export const useSchoolclassStore = defineStore("schoolclass", {
       this.error = null;
       try {
         const updatedItem = await service.update(id, updateData);
-        const response = await service.getAll();
-        // const response = await service.getAllSortSearch(
-        //   this.sortColumn,
-        //   this.sortDirection,
-        //   this.searchStore.searchWord,
-        // );
+        // const response = await service.getAll();
+        const response = await service.getAllSortSearch(
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
         this.items = response.data;
         // toast.messages.push(`Sikeresen módosítva`);
         // toast.show("Success");
@@ -162,12 +162,12 @@ export const useSchoolclassStore = defineStore("schoolclass", {
       this.error = null;
       try {
         await service.delete(id);
-        const response = await service.getAll();
-        // const response = await service.getAllSortSearch(
-        //   this.sortColumn,
-        //   this.sortDirection,
-        //   this.searchStore.searchWord,
-        // );
+        //const response = await service.getAll();
+        const response = await service.getAllSortSearch(
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
         this.items = response.data;
         // toast.messages.push(`Sikeresen törölve`);
         // toast.show("Success");
