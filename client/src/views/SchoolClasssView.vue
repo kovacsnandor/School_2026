@@ -143,9 +143,13 @@ export default {
     },
     //mehet a torlés
     async confirmHandler() {
-      await this.delete(this.toDeleteId)
-      this.isOpenConfirmModal = false;
-      this.state = "r";
+      try {
+        await this.delete(this.toDeleteId);
+        this.isOpenConfirmModal = false;
+        this.state = "r";
+      } catch (error) {
+        this.isOpenConfirmModal = false;
+      }
     },
 
     async yesEventFormHandler({ item, done }) {
@@ -159,7 +163,7 @@ export default {
           await this.update(item.id, item);
         }
         //nem volt hiba
-        this.state="r";
+        this.state = "r";
         done(true);
       } catch (err) {
         //hiba volt
@@ -173,7 +177,6 @@ export default {
           done(false);
         }
         //átadom a hibát
-
       }
     },
   },
