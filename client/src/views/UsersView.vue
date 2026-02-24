@@ -11,7 +11,7 @@
           class="bi bi-hourglass-split fs-3 col-auto p-0 pe-1"
         ></i>
         <!-- új rekord ikon -->
-        <ButtonsCrudCreate v-if="!loading" @create="createHandler" />
+        <!-- <ButtonsCrudCreate v-if="!loading" @create="createHandler" /> -->
         <p class="m-0 ms-2">({{ getItemsLength }})</p>
       </div>
     </div>
@@ -21,9 +21,12 @@
       :items="items"
       :columns="tableColumns"
       :useCollectionStore="useCollectionStore"
+      :cButtonVisible="false"
+      :pButtonVisible="true"
       @delete="deleteHandler"
       @update="updateHandler"
       @create="createHandler"
+      @passwordChange="passwordChangeHandler"
       @sort="sortHandler"
       v-if="items.length > 0"
     />
@@ -126,6 +129,10 @@ export default {
       // this.clearItem();
       // this.$refs.form.show();
       // console.log("Create:");
+    },
+    passwordChangeHandler(id){
+      console.log("passwordChangeHandler", id);
+      
     },
     sortHandler(column) {
       console.log(column);

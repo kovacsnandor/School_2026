@@ -43,7 +43,13 @@
               @delete="$emit('delete', $event)"
               @update="$emit('update', $event)"
               @create="$emit('create', $event)"
+              @passwordChange="$emit('passwordChange', $event)"
+              :cButtonVisible="cButtonVisible"
+              :uButtonVisible="uButtonVisible"
+              :dButtonVisible="dButtonVisible"
+              :pButtonVisible="pButtonVisible"
             />
+            
           </td>
           <template v-for="col in columns">
             <td
@@ -69,6 +75,11 @@ export default {
     items: { type: Array, required: true },
     columns: { type: Array, required: true }, // Pl: [{key: 'name', label: 'Név', debug: false}]
     useCollectionStore: { type: Function, required: true },
+    cButtonVisible: { type: Boolean, default: true },
+    uButtonVisible: { type: Boolean, default: true },
+    dButtonVisible: { type: Boolean, default: true },
+    pButtonVisible: { type: Boolean, default: false },
+
   },
   components: {
     ButtonsCrud,
