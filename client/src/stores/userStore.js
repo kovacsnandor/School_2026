@@ -85,9 +85,11 @@ export const useUserStore = defineStore("user", {
       this.loading = true;
       this.error = null;
       //   const toast = useToastStore();
+      
       try {
         const response = await service.getById(id);
         this.item = response.data;
+        console.log("user adatmódosítás", response.data);
       } catch (err) {
         this.error = err;
         throw err;

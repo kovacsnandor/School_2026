@@ -145,11 +145,10 @@ export default {
     async confirmHandler() {
       try {
         await this.delete(this.toDeleteId);
-        this.isOpenConfirmModal = false;
-        this.state = "r";
       } catch (error) {
-        this.isOpenConfirmModal = false;
       }
+      this.isOpenConfirmModal = false;
+      this.state = "r";
     },
 
     async yesEventFormHandler({ item, done }) {

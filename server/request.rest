@@ -38,7 +38,7 @@ Accept: application/json
 Authorization: Bearer {{token}}
 
 ### get user by id
-GET  {{host}}/api/users/1
+GET  {{host}}/api/users/2
 Accept: application/json
 Authorization: Bearer {{token}}
 
@@ -48,8 +48,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name":  "Tanuló3",
-    "email": "tanulo3@example.com",
+    "name":  "Tanuló13",
+    "email": "tanulo13@example.com",
     "password": "123"
 }
 

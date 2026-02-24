@@ -180,7 +180,7 @@ class UserController extends Controller
         );
     }
 
-    
+
 
 
     public function index()
@@ -251,23 +251,9 @@ class UserController extends Controller
      */
     public function show(int $id)
     {
-        $row = User::find($id);
-        if ($row) {
-            # code...
-            $status = 200;
-            $data = [
-                'message' => 'OK',
-                'data' => $row[0]
-            ];
-        } else {
-            # code...
-            $status = 404;
-            $data = [
-                'message' => "Not found id: $id",
-                'data' => null
-            ];
-        }
-        return response()->json($data, $status, options: JSON_UNESCAPED_UNICODE);
+        return $this->apiResponse(function () use ($id) {
+            return User::findOrFail($id);
+        });
     }
 
     /**
@@ -386,7 +372,7 @@ class UserController extends Controller
         return response()->json($data, $status, options: JSON_UNESCAPED_UNICODE);
     }
 
-        //Önmagam jelszavának módosítása
+    //Önmagam jelszavának módosítása
     public function updatePassword(UpdateUserPasswordRequest $request)
     {
         /** @var \App\Models\User $user */

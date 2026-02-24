@@ -29,6 +29,13 @@
     />
     <div v-else style="width: 100px" class="m-auto">Nincs találat</div>
 
+    <FormUser
+      ref="form"
+      :title="title"
+      :item="item"
+      @yesEventForm="yesEventFormHandler"
+    />
+
     <!-- Confirm modal -->
     <ConfirmModal
       :isOpenConfirmModal="isOpenConfirmModal"
@@ -43,9 +50,11 @@ import { mapActions, mapState } from "pinia";
 //módosít
 import { useUserStore } from "@/stores/userStore";
 import { useSearchStore } from "@/stores/searchStore";
+import { useToastStore } from "@/stores/toastStore";
 import GenericTable from "@/components/Table/GenericTable.vue";
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import ButtonsCrudCreate from "@/components/Table/ButtonsCrudCreate.vue";
+import FormUser from "@/components/Forms/FormUser.vue";
 export default {
   //módosít
   name: "SchooClassView",
@@ -53,6 +62,7 @@ export default {
     GenericTable,
     ConfirmModal,
     ButtonsCrudCreate,
+    FormUser,
   },
   watch: {
     searchWord() {
@@ -74,16 +84,13 @@ export default {
       useCollectionStore: useUserStore,
       isOpenConfirmModal: false,
       toDeleteId: null,
+      state: "r", //crud
+      title: "",
     };
   },
   computed: {
     //módosít
-    ...mapState(useUserStore, [
-      "item",
-      "items",
-      "loading",
-      "getItemsLength",
-    ]),
+    ...mapState(useUserStore, ["item", "items", "loading", "getItemsLength"]),
     ...mapState(useSearchStore, ["searchWord"]),
   },
   methods: {
@@ -95,17 +102,30 @@ export default {
       "create",
       "update",
       "delete",
+      "clearItem",
     ]),
-    ...mapActions(useSearchStore,['resetSearchWord']),
+    ...mapActions(useSearchStore, ["resetSearchWord"]),
     deleteHandler(id) {
+      this.state = "d";
       this.isOpenConfirmModal = true;
       this.toDeleteId = id;
     },
     updateHandler(id) {
+      this.state = "u";
+      this.title = "Adatmódosítás";
+      this.getById(id);
+      this.$refs.form.show();
       console.log("update:", id);
     },
     createHandler() {
-      console.log("Create:");
+      useToastStore().messages.push("Innen nem hozható létre user");
+      useToastStore().show("Error");
+      return;
+      // this.state = "c";
+      // this.title = "Új adatbevitel";
+      // this.clearItem();
+      // this.$refs.form.show();
+      // console.log("Create:");
     },
     sortHandler(column) {
       console.log(column);
@@ -114,11 +134,45 @@ export default {
     cancelHandler() {
       console.log("mégsem törlök");
       this.isOpenConfirmModal = false;
+      this.state = "r";
     },
-    confirmHandler() {
-      console.log("delete:", this.toDeleteId);
+    async confirmHandler() {
+      try {
+        await this.delete(this.toDeleteId);
+      } catch (error) {
+      }
       this.isOpenConfirmModal = false;
+      this.state = "r";
     },
+
+    async yesEventFormHandler({ item, done }) {
+      //vagy create, vagy update
+      try {
+        if (this.state == "c") {
+          //create
+          await this.create(item);
+        } else {
+          //update
+          await this.update(item.id, item);
+        }
+        //nem volt hiba
+        this.state = "r";
+        done(true);
+      } catch (err) {
+        //hiba volt
+        //nem csukódik le az ablak
+        if (err.response && err.response.status === 422) {
+          // Átadjuk a formnak a konkrét hibaüzeneteket (pl. "min 2 karakter")
+          this.$refs.form.setServerErrors(err.response.data.errors);
+          done(false); // Nyitva tartja a modalt
+        } else {
+          // Minden más hiba (500, 401) esetén is értesítjük a modalt, hogy ne záródjon be
+          done(false);
+        }
+        //átadom a hibát
+      }
+    },
+
   },
   async mounted() {
     this.resetSearchWord();
