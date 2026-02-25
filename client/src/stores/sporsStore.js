@@ -13,22 +13,49 @@ class Item {
   }
 }
 
+class Pagination {
+  constructor(current_page = 1, last_page = 1, total = 10) {
+    this.current_page = current_page;
+    this.last_page = last_page;
+    this.total = total;
+  }
+}
+
 export const useSportStore = defineStore("sports", {
   state: () => ({
     item: new Item(),
     items: [new Item()],
+    pagination: new Pagination(),
+    selectedPerPage: 10,
+    selectedPerPageList: [3, 30, 50, 100],
     loading: false,
     error: null,
     sortColumn: "id",
     sortDirection: "asc",
     searchStore: useSearchStore(),
   }),
-  getters:{
-    getItemsLength(){
+  getters: {
+    getItemsLength() {
       return this.items.length;
-    }
+    },
   },
   actions: {
+    async setSelectedPerPage(value) {
+      this.selectedPerPage = value;
+      this.loading = true;
+      await this.getPaging();
+      this.loading = false;
+    },
+    setColumn(column) {
+      this.sortColumn = column;
+      const direction =
+        this.sortColumn === column && this.sortDirection === "asc"
+          ? "desc"
+          : "asc";
+      this.sortDirection = direction;
+      this.getPaging();
+    },
+
     clearItem() {
       this.item = new Item();
     },
@@ -86,6 +113,35 @@ export const useSportStore = defineStore("sports", {
       } catch (err) {
         this.error = err;
         throw err;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async getPaging(page = null) {
+      this.loading = true;
+      this.error = null;
+      //Ha nincs megadva oldal, menj az aktuálisra
+      if (!page) {
+        page = this.pagination.current_page;
+      }
+      try {
+        const response = await service.getPaging(
+          page,
+          this.selectedPerPage,
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
+        this.items = response.data;
+        this.pagination = response.meta;
+        return true;
+      } catch (err) {
+        this.error = err;
+        // toast.messages.push(`Az adatok nem töltődtek be`);
+        // toast.show("Error");
+        throw err;
+        return false;
       } finally {
         this.loading = false;
       }

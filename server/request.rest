@@ -188,8 +188,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 
-### get sports: lapozás: oldal/rekord_oldalanként
-GET {{host}}/api/sportspaging/1/3/id/asc/a
+### get sports: lapozás: /{page}/{per_page}/{column}/{direction}/{search?}
+GET {{host}}/api/sportspaging/alma/10/id/asc/
 Accept: application/json 
 Content-Type: application/json 
 Authorization: Bearer {{token}}
