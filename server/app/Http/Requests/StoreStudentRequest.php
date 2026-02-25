@@ -44,7 +44,13 @@ class StoreStudentRequest extends FormRequest
             'lakCim' => 'nullable|string|max:120',
             'szulHelyseg' => 'nullable|string|max:50',
             'szulDatum' => 'nullable|date|before:today',
-            'igazolvanyszam' => 'nullable|string|max:15|unique:students,igazolvanyszam',
+            'igazolvanyszam' => [
+                'nullable',
+                'string',
+                'max:15',
+                'regex:/^[A-Z]{2}[0-9]{6}$/',
+                'unique:students,igazolvanyszam'
+            ],
             'atlag' => 'nullable|numeric|between:1.0,5.0',
             'osztondij' => 'nullable|numeric|min:0',
         ];
@@ -89,6 +95,7 @@ class StoreStudentRequest extends FormRequest
 
             // igazolvanyszam
             'igazolvanyszam.string' => 'Az igazolványszám csak szöveg lehet.',
+            'igazolvanyszam.regex'    => 'Az igazolványszám formátuma érvénytelen (pl. LI168383).',
             'igazolvanyszam.max'    => 'Az igazolványszám nem lehet hosszabb :max karakternél.',
             'igazolvanyszam.unique' => 'Ezzel az igazolványszámmal már rögzítettek egy diákot.',
 

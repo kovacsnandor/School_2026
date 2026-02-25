@@ -35,6 +35,7 @@ apiClient.interceptors.response.use(
   (response) => response.data,
   //Ha hiba: akkor kezeli a hibát és visszaküld egy Promies.reject(error)-t
   (error) => {
+        
     const toastStore = useToastStore();
     // Ha a szerver válaszolt
     if (error.response) {

@@ -39,6 +39,7 @@ class UpdateStudentRequest extends FormRequest
                 'sometimes',
                 'nullable',
                 'string',
+                'regex:/^[A-Z]{2}[0-9]{6}$/',
                 'max:20',
                 Rule::unique('students', 'igazolvanyszam')->ignore($id),
             ],
@@ -77,6 +78,7 @@ class UpdateStudentRequest extends FormRequest
 
             // igazolvanyszam
             'igazolvanyszam.string' => 'Az igazolványszám formátuma érvénytelen.',
+            'igazolvanyszam.regex'    => 'Az igazolványszám formátuma érvénytelen (pl. LI168383).',
             'igazolvanyszam.max'    => 'Az igazolványszám maximum :max karakter lehet.',
             'igazolvanyszam.unique' => 'Ez az igazolványszám már egy másik diákhoz tartozik.',
 

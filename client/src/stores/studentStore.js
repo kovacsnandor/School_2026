@@ -58,7 +58,11 @@ export const useStudentStore = defineStore("student", {
     // READ - Összes adat lekérése
     //Ha a direction meg van aadva, akkor ez lesz a sorrend
     //Ha nincs megadva, akkor ellentettjére vált
-    async getStudentsBySchoolclassId(schoolclassId,column = "id", direction = null) {
+    async getStudentsBySchoolclassId(
+      schoolclassId,
+      column = "id",
+      direction = null,
+    ) {
       //   const toast = useToastStore();
       this.loading = true;
       this.error = null;
@@ -71,7 +75,8 @@ export const useStudentStore = defineStore("student", {
       }
       this.sortDirection = direction;
       try {
-        const response = await service.getStudentsBySchoolclassId(schoolclassId,
+        const response = await service.getStudentsBySchoolclassId(
+          schoolclassId,
           this.sortColumn,
           this.sortDirection,
           this.searchStore.searchWord,
@@ -117,12 +122,13 @@ export const useStudentStore = defineStore("student", {
     },
 
     // CREATE - Új elem hozzáadása
-    async create(data) {
+    async create(data, schoolclassId) {
       this.loading = true;
       this.error = null;
       try {
         const newItem = await service.create(data);
-        const response = await service.getAllSortSearch(
+        const response = await service.getStudentsBySchoolclassId(
+          schoolclassId,
           this.sortColumn,
           this.sortDirection,
           this.searchStore.searchWord,
@@ -141,23 +147,25 @@ export const useStudentStore = defineStore("student", {
     },
 
     // 3. UPDATE - Módosítás (Helyi frissítéssel, újraolvasás nélkül)
-    async update(id, updateData) {
+    async update(id, updateData, schoolclassId) {
       this.loading = true;
       this.error = null;
       try {
         const updatedItem = await service.update(id, updateData);
-        const response = await service.getAll();
-        // const response = await service.getAllSortSearch(
-        //   this.sortColumn,
-        //   this.sortDirection,
-        //   this.searchStore.searchWord,
-        // );
+        const response = await service.getStudentsBySchoolclassId(
+          schoolclassId,
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
         this.items = response.data;
         // toast.messages.push(`Sikeresen módosítva`);
         // toast.show("Success");
         return true;
       } catch (err) {
         this.error = err;
+        console.log("student store hiba",err);
+        
         throw err;
         return false;
       } finally {
@@ -166,17 +174,17 @@ export const useStudentStore = defineStore("student", {
     },
 
     // 4. DELETE - Törlés
-    async delete(id) {
+    async delete(id,schoolclassId) {
       this.loading = true;
       this.error = null;
       try {
         await service.delete(id);
-        const response = await service.getAll();
-        // const response = await service.getAllSortSearch(
-        //   this.sortColumn,
-        //   this.sortDirection,
-        //   this.searchStore.searchWord,
-        // );
+        const response = await service.getStudentsBySchoolclassId(
+          schoolclassId,
+          this.sortColumn,
+          this.sortDirection,
+          this.searchStore.searchWord,
+        );
         this.items = response.data;
         // toast.messages.push(`Sikeresen törölve`);
         // toast.show("Success");
