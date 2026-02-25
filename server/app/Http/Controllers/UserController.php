@@ -185,26 +185,11 @@ class UserController extends Controller
 
     public function index()
     {
-        try {
-            //code...
-            $rows = User::all();
-            // $sql ="SELECT * FROM products";
-            // $rows = DB::select($sql);
-            $status = 200;
-            $data = [
-                'message' => 'OK',
-                'data' => $rows
-            ];
-        } catch (\Exception $e) {
-            //throw $th;
-            $status = 500;
-            $data = [
-                'message' => "Server error {$e->getCode()}",
-                'data' => $rows
-            ];
-        }
-
-        return response()->json($data, $status, options: JSON_UNESCAPED_UNICODE);
+        return $this->apiResponse(
+            function () {
+                return User::all();
+            }
+        );
     }
 
     /**
@@ -220,30 +205,11 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        try {
-            $row = User::create($request->all());
-
-            $data = [
-                'message' => 'ok',
-                'data' => $row
-            ];
-            // Sikeres válasz: 201 Created kód ajánlott új erőforrás létrehozásakor
-            return response()->json($data, 201, options: JSON_UNESCAPED_UNICODE);
-        } catch (QueryException $e) {
-            // Ellenőrizzük, hogy ez egy "Duplicate entry for key" hiba-e (MySQL hibakód: 23000 vagy 1062)
-            if ($e->getCode() == 23000 || str_contains($e->getMessage(), 'Duplicate entry')) {
-                $data = [
-                    'message' => 'Insert error: The given name already exists, please choose another one',
-                    'data' => [
-                        'name' => $request->input('name') // Visszaküldhetjük, mi volt a hibás
-                    ]
-                ];
-                // Kliens hiba, ami jelzi a kérés érvénytelenségét
-                return response()->json($data, 409, options: JSON_UNESCAPED_UNICODE); // 409 Conflict ajánlott
+        return $this->apiResponse(
+            function () use ($request) {
+                return User::create($request->validated());
             }
-            // Ha nem ez a hiba volt, dobjuk tovább az eredeti kivételt, vagy kezeljük másképp
-            throw $e;
-        }
+        );
     }
 
     /**
