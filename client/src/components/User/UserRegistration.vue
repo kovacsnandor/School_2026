@@ -17,7 +17,7 @@
               id="userName"
               v-model="userName"
               @input="clearError('name')"
-              pattern="^\w{2,}$"
+             
               required
             />
             <div v-if="!serverErrors.name" class="invalid-feedback">
@@ -35,10 +35,14 @@
               class="form-control"
               id="email"
               v-model="email"
+               @input="clearError('email')"
               required
             />
-            <div class="invalid-feedback">
+            <div v-if="!serverErrors.email" class="invalid-feedback">
               A email kötelező, vagy nem szabályos
+            </div>
+            <div v-if="serverErrors.email" class="invalid-feedback d-block">
+              {{ serverErrors.email[0] }}
             </div>
           </div>
           <!-- Password1 -->
@@ -49,6 +53,7 @@
             :label="'Jelszavad'"
             :inputRef="'firstInput'"
             :label-id="'password'"
+            :serverErrors="serverErrors"
           />
           <!-- Password2 -->
           <PasswordField
@@ -58,6 +63,7 @@
             :inputRef="'confirmInput'"
             :label-id="'confirmPassword'"
             :passwordErrorMessage="passwordErrorMessage"
+            :serverErrors="serverErrors"
           />
           <!-- Regisztrálás -->
           <button type="submit" class="btn btn-success">Regisztrálás</button>
@@ -93,6 +99,7 @@ export default {
       confirmPassword: "",
       validated: false,
       passwordErrorMessage: "",
+      serverErrors: {},
     };
   },
 
@@ -128,10 +135,19 @@ export default {
           email: this.email,
           password: this.password,
         };
-        this.$emit("createUser", data);
-        // setTimeout(() => {
-        //   this.$router.push("/login");
-        // }, 3500);
+        this.$emit("createUser", 
+        {
+          data: data,
+          done: (success) => {
+            if (success) {
+              this.$router.push('/login');
+            }else{
+              console.log("Server oldali hiba, űrlap marad");
+            }
+          }
+        } 
+      );
+        
       }
     },
     //422-es hiba kezelés
