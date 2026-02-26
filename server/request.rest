@@ -48,9 +48,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name":  "Tanuló13",
-    "email": "tanulo13@example.com",
-    "password": "123"
+    "name":  "Diák 2",
+    "email": "diak2@example.com",
+    "password": "12"
 }
 
 ### patch user

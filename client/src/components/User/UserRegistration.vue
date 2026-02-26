@@ -16,9 +16,16 @@
               class="form-control"
               id="userName"
               v-model="userName"
+              @input="clearError('name')"
+              pattern="^\w{2,}$"
               required
             />
-            <div class="invalid-feedback">A user név kötelező</div>
+            <div v-if="!serverErrors.name" class="invalid-feedback">
+              A user név kötelező, vagy 2-nél hosszabb kell legyen
+            </div>
+            <div v-if="serverErrors.name" class="invalid-feedback d-block">
+              {{ serverErrors.name[0] }}
+            </div>
           </div>
           <!-- Email -->
           <div class="mb-3">
@@ -52,7 +59,9 @@
             :label-id="'confirmPassword'"
             :passwordErrorMessage="passwordErrorMessage"
           />
+          <!-- Regisztrálás -->
           <button type="submit" class="btn btn-success">Regisztrálás</button>
+          <!-- Mégse -->
           <button
             type="button"
             class="btn btn-primary ms-2"
@@ -125,9 +134,19 @@ export default {
         // }, 3500);
       }
     },
+    //422-es hiba kezelés
+    // View hívja, ha 422-es hiba van
+    setServerErrors(errors) {
+      this.serverErrors = errors;
+    },
+    //Mező (field) eltüntetése a serverErrors objektumból
+    clearError(field) {
+      if (this.serverErrors[field]) {
+        delete this.serverErrors[field];
+      }
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
