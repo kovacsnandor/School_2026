@@ -13,6 +13,11 @@
         <!-- új rekord ikon -->
         <ButtonsCrudCreate v-if="!loading" @create="createHandler" />
         <p class="m-0 ms-2">({{ getItemsLength }})</p>
+
+        <!-- Paginátor -->
+         <Pagination
+          :useCollectionStore="useCollectionStore"
+         />
       </div>
     </div>
 
@@ -55,6 +60,7 @@ import GenericTable from "@/components/Table/GenericTable.vue";
 import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import ButtonsCrudCreate from "@/components/Table/ButtonsCrudCreate.vue";
 import FormSport from "@/components/Forms/FormSport.vue";
+import Pagination from "@/components/Pagination/Pagination.vue";
 export default {
   //módosít
   name: "SportView",
@@ -63,10 +69,11 @@ export default {
     ConfirmModal,
     ButtonsCrudCreate,
     FormSport,
+    Pagination,
   },
   watch: {
     searchWord() {
-      this.getAllSortSearch(this.sortColumn, this.sortDirection);
+      this.getPaging();
     },
   },
   data() {
@@ -103,6 +110,8 @@ export default {
     ...mapActions(useSportStore, [
       "getAll",
       "getAllSortSearch",
+      "getPaging",
+      "setColumn",
       "getById",
       "create",
       "update",
@@ -131,7 +140,7 @@ export default {
     },
     sortHandler(column) {
       console.log(column);
-      this.getAllSortSearch(column);
+      this.setColumn(column);
     },
     cancelHandler() {
       console.log("mégsem törlök");
@@ -175,7 +184,7 @@ export default {
   },
   async mounted() {
     this.resetSearchWord();
-    await this.getAll();
+    await this.getPaging(1);
   },
 };
 </script>

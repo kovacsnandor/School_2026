@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="pagination.last_page > 1">
+  <nav v-if="pagination.last_page > 1" class="ms-2">
     <ul class="pagination m-0">
       <!-- firs -->
       <li
