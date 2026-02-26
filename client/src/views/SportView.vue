@@ -14,6 +14,10 @@
         <ButtonsCrudCreate v-if="!loading" @create="createHandler" />
         <p class="m-0 ms-2">({{ getItemsLength }})</p>
 
+        <!-- sor/oldal -->
+        <SetSelectedPerPage
+         :useCollectionStore="useCollectionStore" 
+        />
         <!-- Paginátor -->
          <Pagination
           :useCollectionStore="useCollectionStore"
@@ -61,6 +65,7 @@ import ConfirmModal from "@/components/Confirm/ConfirmModal.vue";
 import ButtonsCrudCreate from "@/components/Table/ButtonsCrudCreate.vue";
 import FormSport from "@/components/Forms/FormSport.vue";
 import Pagination from "@/components/Pagination/Pagination.vue";
+import SetSelectedPerPage from "@/components/Pagination/SetSelectedPerPage.vue";
 export default {
   //módosít
   name: "SportView",
@@ -70,6 +75,7 @@ export default {
     ButtonsCrudCreate,
     FormSport,
     Pagination,
+    SetSelectedPerPage,
   },
   watch: {
     searchWord() {
