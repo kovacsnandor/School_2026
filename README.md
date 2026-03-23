@@ -29,7 +29,7 @@ git reset --hard origin/<ág_neve>
 git clean -fd
 ```
 ### Egy lépésben
-- Az ág nevét be kell írni
+- Itt az ág nevét be kell írni
 ```console
 git fetch origin && git reset --hard origin/<ág_neve> && git clean -fd
 ```
