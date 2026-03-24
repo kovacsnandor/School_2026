@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.2",
+    "@vitest/ui": "^4.0.15",
     "@vue/test-utils": "^2.4.0",
     "cypress": "^15.7.0",
     "jsdom": "^27.2.0",
