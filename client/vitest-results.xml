@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="13" failures="0" errors="0" time="0.0793577">
+    <testsuite name="src/__tests__/App.spec.js" timestamp="2026-03-25T09:16:29.579Z" hostname="DESKTOP-OT03NMF" tests="1" failures="0" errors="0" skipped="0" time="0.0320185">
+        <testcase classname="src/__tests__/App.spec.js" name="App &gt; megfelelően renderelődik a függőségekkel" time="0.0311793">
+            <system-err>
+[Vue Router warn]: No match found for location with path &quot;/adatok&quot;
+[Vue Router warn]: No match found for location with path &quot;/adatok&quot;
+
+            </system-err>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/__tests__/unit/stores/useSportStore.spec.js" timestamp="2026-03-25T09:16:29.583Z" hostname="DESKTOP-OT03NMF" tests="9" failures="0" errors="0" skipped="0" time="0.010205">
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore CRUD műveletek &gt; getAll - sikeresen lekéri a sportokat" time="0.0040208">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore CRUD műveletek &gt; getById - betölt egy konkrét sportot az id alapján" time="0.0006101">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore CRUD műveletek &gt; create - új sportot ad hozzá és frissíti a listát" time="0.0006124">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore CRUD műveletek &gt; update - módosítja a sportot és frissíti a listát" time="0.0006528">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore CRUD műveletek &gt; delete - törli a sportot és újratölti a listát" time="0.0005688">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore hibaág tesztek &gt; delete - kezeli a kényszerfeltétel hibát (1451)" time="0.0005365">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore hibaág tesztek &gt; delete - kezeli a kényszerfeltétel hibát (MySQL 1451)" time="0.0004476">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore hibaág tesztek &gt; create - kezeli a 422-es validációs hibát" time="0.0004212">
+        </testcase>
+        <testcase classname="src/__tests__/unit/stores/useSportStore.spec.js" name="SportStore hibaág tesztek &gt; 422-es hiba esetén NEM hívódik meg a Toast" time="0.0012567">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/__tests__/unit/components/forms/SportForm.spec.js" timestamp="2026-03-25T09:16:29.585Z" hostname="DESKTOP-OT03NMF" tests="3" failures="0" errors="0" skipped="0" time="0.0371342">
+        <testcase classname="src/__tests__/unit/components/forms/SportForm.spec.js" name="FormSport.vue komponens tesztek &gt; megjeleníti a címet és az alapértelmezett adatokat" time="0.0244599">
+        </testcase>
+        <testcase classname="src/__tests__/unit/components/forms/SportForm.spec.js" name="FormSport.vue komponens tesztek &gt; frissíti a formItem-et, ha a szülő megváltoztatja az item prop-ot" time="0.0038233">
+        </testcase>
+        <testcase classname="src/__tests__/unit/components/forms/SportForm.spec.js" name="FormSport.vue komponens tesztek &gt; eltávolítja a hibaüzenetet, ha a felhasználó gépelni kezd" time="0.0076318">
+        </testcase>
+    </testsuite>
+</testsuites>

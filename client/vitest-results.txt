@@ -1,0 +1,22 @@
+
+ RUN  v4.0.15 C:/iskola/13d/projektek/14_School_2026/client
+
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > getAll - sikeresen lekéri a sportokat 7ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > getById - betölt egy konkrét sportot az id alapján 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > create - új sportot ad hozzá és frissíti a listát 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > update - módosítja a sportot és frissíti a listát 2ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > delete - törli a sportot és újratölti a listát 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (1451) 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (MySQL 1451) 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > create - kezeli a 422-es validációs hibát 1ms
+ ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > 422-es hiba esetén NEM hívódik meg a Toast 2ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > megjeleníti a címet és az alapértelmezett adatokat 38ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > frissíti a formItem-et, ha a szülő megváltoztatja az item prop-ot 7ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > eltávolítja a hibaüzenetet, ha a felhasználó gépelni kezd 6ms
+ ✓ src/__tests__/App.spec.js > App > megfelelően renderelődik a függőségekkel 32ms
+
+ Test Files  3 passed (3)
+      Tests  13 passed (13)
+   Start at  10:17:05
+   Duration  1.26s (transform 347ms, setup 0ms, import 979ms, tests 103ms, environment 1.79s)
+

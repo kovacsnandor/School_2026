@@ -36,6 +36,7 @@ describe("SportStore CRUD műveletek", () => {
     expect(apiClient.get).toHaveBeenCalledWith("/sports");
     expect(store.items).toHaveLength(1);
     expect(store.items[0].sportNev).toBe("Kosárlabda");
+    expect(store.loading).toBe(false);
   });
 
   //GetById
