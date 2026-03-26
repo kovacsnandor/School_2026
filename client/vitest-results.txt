@@ -1,22 +1,40 @@
 
  RUN  v4.0.15 C:/iskola/13d/projektek/14_School_2026/client
 
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > getAll - sikeresen lekéri a sportokat 7ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > getById - betölt egy konkrét sportot az id alapján 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > create - új sportot ad hozzá és frissíti a listát 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > update - módosítja a sportot és frissíti a listát 2ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore CRUD műveletek > delete - törli a sportot és újratölti a listát 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (1451) 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (MySQL 1451) 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > create - kezeli a 422-es validációs hibát 1ms
- ✓ src/__tests__/unit/stores/useSportStore.spec.js > SportStore hibaág tesztek > 422-es hiba esetén NEM hívódik meg a Toast 2ms
- ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > megjeleníti a címet és az alapértelmezett adatokat 38ms
- ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > frissíti a formItem-et, ha a szülő megváltoztatja az item prop-ot 7ms
- ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > eltávolítja a hibaüzenetet, ha a felhasználó gépelni kezd 6ms
- ✓ src/__tests__/App.spec.js > App > megfelelően renderelődik a függőségekkel 32ms
+ ✓ src/__tests__/unit/components/Confirm/ConfirmModal.spec.js > ConfirmModal.vue > kiváltja a confirm eseményt az Igen gombra kattintva 33ms
+ ✓ src/__tests__/unit/components/Confirm/ConfirmModal.spec.js > ConfirmModal.vue > kiváltja a cancel eseményt a Nem gombra kattintva 5ms
+stdout | src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > nem küld eseményt, ha a form validáció elbukik
+Kliens oldali hiba az űrlapon
 
- Test Files  3 passed (3)
-      Tests  13 passed (13)
-   Start at  10:17:05
-   Duration  1.26s (transform 347ms, setup 0ms, import 979ms, tests 103ms, environment 1.79s)
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore CRUD műveletek > getAll - sikeresen lekéri a sportokat 7ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore CRUD műveletek > getById - betölt egy konkrét sportot az id alapján 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore CRUD műveletek > create - új sportot ad hozzá és frissíti a listát 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore CRUD műveletek > update - módosítja a sportot és frissíti a listát 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore CRUD műveletek > delete - törli a sportot és újratölti a listát 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (1451) 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore hibaág tesztek > delete - kezeli a kényszerfeltétel hibát (MySQL 1451) 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore hibaág tesztek > create - kezeli a 422-es validációs hibát 1ms
+ ✓ src/__tests__/unit/stores/sportStore.spec.js > SportStore hibaág tesztek > 422-es hiba esetén NEM hívódik meg a Toast 1ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > megjeleníti a címet és az alapértelmezett adatokat 32ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > frissíti a formItem-et, ha a szülő megváltoztatja az item prop-ot 6ms
+ ✓ src/__tests__/unit/components/forms/SportForm.spec.js > FormSport.vue komponens tesztek > eltávolítja a hibaüzenetet, ha a felhasználó gépelni kezd 10ms
+ ✓ src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > megjeleníti a helyes szövegeket (title, yes, no) 27ms
+ ✓ src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > alkalmazza a megfelelő méret osztályt 6ms
+ ✓ src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > nem küld eseményt, ha a form validáció elbukik 8ms
+ ✓ src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > kiváltja a yesEvent-et, ha az űrlap érvényes 4ms
+ ✓ src/__tests__/unit/components/modal/Modal.spec.js > Modal.vue tesztek > bezáródik, ha a callback sikeres (success: true) 5ms
+ ✓ src/__tests__/App.spec.js > App > megfelelően renderelődik a függőségekkel 31ms
+stdout | src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > megnyitja a Formot új adat felviteléhez
+Create:
+
+ ✓ src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > megjeleníti a főcímet és az elemszámot 38ms
+ ✓ src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > megnyitja a Formot új adat felviteléhez 11ms
+ ✓ src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > törlési folyamat: megnyitja a ConfirmModalt, majd hívja a törlést 10ms
+ ✓ src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > sikeres mentés után lezárja a formot 6ms
+ ✓ src/__tests__/unit/views/SportView.spec.js > SportView.vue Integrációs Teszt > szerver hiba (422) esetén nem zárja le a formot és átadja a hibákat 4ms
+
+ Test Files  6 passed (6)
+      Tests  25 passed (25)
+   Start at  10:04:42
+   Duration  1.50s (transform 653ms, setup 0ms, import 1.90s, tests 259ms, environment 4.22s)
 

@@ -3,8 +3,12 @@
     <Modal ref="modal" :title="title" @yesEvent="yesEventHandler">
       <!-- vezérlőelemek -->
       <div class="mb-4 row pt-2">
-        <label for="sportNev" class="col-form-label col-auto pt-1 pe-0"
-          >Sportnév:</label
+        <label 
+        for="sportNev" 
+        class="col-form-label col-auto pt-1 pe-0"
+        data-test="label-sport-nev"
+        >
+          Sportnév:</label
         >
         <div class="col">
           <input
@@ -13,6 +17,7 @@
             id="sportNev"
             v-model="formItem.sportNev"
             @input="clearError('sportNev')"
+            data-test="input-sport-nev"
             required
           />
           <div v-if="!serverErrors.sportNev" class="invalid-feedback position-absolute">

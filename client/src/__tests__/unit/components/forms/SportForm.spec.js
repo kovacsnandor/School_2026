@@ -22,8 +22,8 @@ describe('FormSport.vue komponens tesztek', () => {
       global: { stubs: { Modal: ModalStub } }
     });
 
-    expect(wrapper.find('label').text()).toContain('Sportnév:');
-    expect(wrapper.find('input').element.value).toBe('Tenisz');
+    expect(wrapper.find('[data-test="label-sport-nev"]').text()).toContain('Sportnév:');
+    expect(wrapper.find('[data-test="input-sport-nev"]').element.value).toBe('Tenisz');
   });
 
   it('frissíti a formItem-et, ha a szülő megváltoztatja az item prop-ot', async () => {
@@ -33,7 +33,7 @@ describe('FormSport.vue komponens tesztek', () => {
     });
 
     await wrapper.setProps({ item: { sportNev: 'Frissített' } });
-    expect(wrapper.find('input').element.value).toBe('Frissített');
+    expect(wrapper.find('[data-test="input-sport-nev"]').element.value).toBe('Frissített');
   });
 
   it('eltávolítja a hibaüzenetet, ha a felhasználó gépelni kezd', async () => {
@@ -51,7 +51,7 @@ describe('FormSport.vue komponens tesztek', () => {
     expect(wrapper.find('.invalid-feedback').exists()).toBe(true);
 
     // Gépelés szimulálása
-    await wrapper.find('input').trigger('input');
+    await wrapper.find('[data-test="input-sport-nev"]').trigger('input');
 
     // A clearError miatt a serverErrors-ból törlődnie kell a kulcsnak
     expect(wrapper.vm.serverErrors.sportNev).toBeUndefined();

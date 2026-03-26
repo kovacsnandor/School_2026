@@ -28,13 +28,16 @@ describe("SportStore CRUD műveletek", () => {
   // READ teszt
   it("getAll - sikeresen lekéri a sportokat", async () => {
     const store = useSportStore();
-    const mockSports = { data: [{ id: 1, sportNev: "Kosárlabda" }] };
+    const mockSports = { data: [
+      { id: 1, sportNev: "Kosárlabda" },
+      { id: 2, sportNev: "Foci" },
+    ] };
     apiClient.get.mockResolvedValue(mockSports);
 
     await store.getAll();
 
     expect(apiClient.get).toHaveBeenCalledWith("/sports");
-    expect(store.items).toHaveLength(1);
+    expect(store.items).toHaveLength(2);
     expect(store.items[0].sportNev).toBe("Kosárlabda");
     expect(store.loading).toBe(false);
   });
