@@ -25,7 +25,9 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@pinia/testing": "^1.0.3",
     "@vitejs/plugin-vue": "^6.0.2",
+    "@vitest/coverage-v8": "^4.0.15",
     "@vitest/ui": "^4.0.15",
     "@vue/test-utils": "^2.4.0",
     "cypress": "^15.7.0",
